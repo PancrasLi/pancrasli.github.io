@@ -43,8 +43,6 @@ code:
   # Code language
   language:
     enable: true
-    default: "auto"
-
   # 代码高亮
   # Code highlight
   highlight:
