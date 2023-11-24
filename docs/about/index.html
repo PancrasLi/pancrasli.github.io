@@ -16,27 +16,31 @@
   <meta name="author" content="Pancras Li">
   <meta name="keywords" content="">
   
-    <meta name="description" content="普通的前端 er">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="关于">
 <meta property="og:url" content="https://blog.pancrasli.com/about/index.html">
 <meta property="og:site_name" content="前端李">
-<meta property="og:description" content="普通的前端 er">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.pancrasli.com/img/logo-l.png">
+<meta property="og:image" content="https://blog.pancrasli.com/about/img/logo-l.png">
 <meta property="article:published_time" content="2023-11-23T10:54:19.000Z">
-<meta property="article:modified_time" content="2023-11-24T03:13:22.058Z">
+<meta property="article:modified_time" content="2023-11-24T06:52:33.849Z">
 <meta property="article:author" content="Pancras Li">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.pancrasli.com/img/logo-l.png">
+<meta name="twitter:image" content="https://blog.pancrasli.com/about/img/logo-l.png">
   
   
   
-  <title>关于我 - 前端李</title>
+  <title>关于 - 前端李</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -144,18 +148,6 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
@@ -192,7 +184,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="关于我"></span>
+            <span id="subtitle" data-typed-text="关于"></span>
           
         </div>
 
@@ -214,18 +206,69 @@
         <div id="board"
           >
           
+            <div class="about-avatar">
+              <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload class="img-fluid" alt="avatar">
+            </div>
+          
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<article class="page-content">
-  <p>普通的前端 er<br><img src="/img/logo-l.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<div class="text-center">
+  <div class="about-info">
+    <div class="about-name">李鹏杰</div>
+    <div class="about-intro">WEB-FE-ER</div>
+    <div class="about-icons">
+      
+        
+        
+        
+        <a href=https://github.com/pancrasli class="
+           hint--bottom hint--rounded"
+           aria-label=GitHub
+           target="_blank"
+        >
+          <i class="iconfont icon-github-fill" aria-hidden="true"></i>
+          
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+<article class="about-content page-content mt-5">
+  <div class="markdown-body">
+    <p style="display:flex;justify-content:center"><img src="img/logo-l.png" srcset="/img/loading.gif" lazyload style="width:200px"/></p>
+
+  </div>
+
+  
+</article>
+
+
+
 
 
   
 
-</article>
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
 
 
 
@@ -327,6 +370,59 @@
 
 
 
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
