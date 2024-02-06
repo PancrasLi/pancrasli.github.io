@@ -7,12 +7,12 @@ title: 前端李
 subtitle: "一个前端工程师的小站"
 description: ""
 keywords:
-author: Pancras Li
+author: 李鹏杰
 timezone: ""
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://blog.pancrasli.com
+url: https://blog.funfe.cn
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
