@@ -26,7 +26,7 @@
 <meta property="og:description" content="闭包提权漏洞">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-13T04:31:08.378Z">
-<meta property="article:modified_time" content="2024-03-13T05:06:11.107Z">
+<meta property="article:modified_time" content="2024-03-13T06:37:29.242Z">
 <meta property="article:author" content="李鹏杰">
 <meta property="article:tag" content="js">
 <meta name="twitter:card" content="summary_large_image">
@@ -290,7 +290,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(o.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;valueOf&quot;</span>)()); <span class="hljs-comment">// output : error - 知识点1:this指向问题</span><br><span class="hljs-comment">// 上述代码等同于</span><br><span class="hljs-keyword">let</span> handleValueOf = o.<span class="hljs-property">valueOf</span>;<br><span class="hljs-title function_">handleValueOf</span>(); <span class="hljs-comment">// output : error  this不指向对象本身</span><br></code></pre></td></tr></table></figure>
 
 <ol start="3">
-<li>valueOf 无法读到对象本身，可以直接使用 Object.prototype 增加一个返回对象本身的方法</li>
+<li>valueOf 无法读到对象本身，可以直接使用 Object.defineProperty 增加一个返回对象本身的方法</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>, <span class="hljs-string">&quot;hack&quot;</span>, &#123;<br>  <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
 
