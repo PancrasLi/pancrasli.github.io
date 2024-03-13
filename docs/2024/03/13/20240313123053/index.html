@@ -26,7 +26,7 @@
 <meta property="og:description" content="闭包提权漏洞">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-13T04:31:08.378Z">
-<meta property="article:modified_time" content="2024-03-13T04:59:23.154Z">
+<meta property="article:modified_time" content="2024-03-13T05:06:11.107Z">
 <meta property="article:author" content="李鹏杰">
 <meta property="article:tag" content="js">
 <meta name="twitter:card" content="summary_large_image">
@@ -275,7 +275,7 @@
                 
                 <h4 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h4><p>以前在面试过程中发现一道有趣的题，抖音刷到了袁进老师的视频，对该问题有了更进一步的认识，记录一下。</p>
 <h4 id="面试题内容"><a href="#面试题内容" class="headerlink" title="面试题内容"></a>面试题内容</h4><blockquote>
-<p>如何在不改变源代码的情况下，修改 obj 对象的属性？</p>
+<p>如何在不改变源代码的情况下，修改 o 对象的属性？</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> o =(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> obj = &#123;<br>    <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>,<br>  &#125;;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) &#123;<br>      <span class="hljs-keyword">return</span> obj[key];<br>    &#125;,<br>  &#125;;<br>&#125;)()<br></code></pre></td></tr></table></figure>
 
