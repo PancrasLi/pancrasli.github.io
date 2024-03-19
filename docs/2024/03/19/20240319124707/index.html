@@ -18,15 +18,15 @@
   <meta name="author" content="李鹏杰">
   <meta name="keywords" content="">
   
-    <meta name="description" content="闭包提权漏洞">
+    <meta name="description" content="洋葱模型">
 <meta property="og:type" content="article">
-<meta property="og:title" content="闭包提权漏洞：修改私有对象的属性">
-<meta property="og:url" content="https://blog.funfe.cn/2024/03/13/20240313123053/index.html">
+<meta property="og:title" content="理解任务执行的洋葱模型 - koa">
+<meta property="og:url" content="https://blog.funfe.cn/2024/03/19/20240319124707/index.html">
 <meta property="og:site_name" content="前端李">
-<meta property="og:description" content="闭包提权漏洞">
+<meta property="og:description" content="洋葱模型">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-13T04:31:08.378Z">
-<meta property="article:modified_time" content="2024-03-13T06:37:29.242Z">
+<meta property="article:published_time" content="2024-03-19T04:47:18.030Z">
+<meta property="article:modified_time" content="2024-03-19T05:10:40.682Z">
 <meta property="article:author" content="李鹏杰">
 <meta property="article:tag" content="js">
 <meta name="twitter:card" content="summary_large_image">
@@ -35,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>闭包提权漏洞：修改私有对象的属性 - 前端李</title>
+  <title>理解任务执行的洋葱模型 - koa - 前端李</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -189,7 +189,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="闭包提权漏洞：修改私有对象的属性"></span>
+            <span id="subtitle" data-typed-text="理解任务执行的洋葱模型 - koa"></span>
           
         </div>
 
@@ -200,8 +200,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-13 12:31" pubdate>
-          2024年3月13日 下午
+        <time datetime="2024-03-19 12:47" pubdate>
+          2024年3月19日 下午
         </time>
       </span>
     
@@ -212,7 +212,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          381 字
+          391 字
         
       </span>
     
@@ -268,48 +268,18 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">闭包提权漏洞：修改私有对象的属性</h1>
+            <h1 id="seo-header">理解任务执行的洋葱模型 - koa</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h4><p>以前在面试过程中发现一道有趣的题，抖音刷到了袁进老师的视频，对该问题有了更进一步的认识，记录一下。</p>
-<h4 id="面试题内容"><a href="#面试题内容" class="headerlink" title="面试题内容"></a>面试题内容</h4><blockquote>
-<p>如何在不改变源代码的情况下，修改 o 对象的属性？</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> o =(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> obj = &#123;<br>    <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>,<br>  &#125;;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) &#123;<br>      <span class="hljs-keyword">return</span> obj[key];<br>    &#125;,<br>  &#125;;<br>&#125;)()<br></code></pre></td></tr></table></figure>
+                <h2 id="1-什么是洋葱模型"><a href="#1-什么是洋葱模型" class="headerlink" title="1. 什么是洋葱模型"></a>1. 什么是洋葱模型</h2><p>洋葱模型，是 koa 中间件的执行顺序。</p>
+<h2 id="2-实现一个洋葱模型的任务执行构造函数"><a href="#2-实现一个洋葱模型的任务执行构造函数" class="headerlink" title="2. 实现一个洋葱模型的任务执行构造函数"></a>2. 实现一个洋葱模型的任务执行构造函数</h2><p>需求：实现一个构造函数满足以下需求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> t = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TaskPro</span>();<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-keyword">async</span> (next) =&gt; &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;start&quot;</span>);<br>  <span class="hljs-keyword">await</span> <span class="hljs-title function_">next</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;end&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;2&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;3&quot;</span>);<br>&#125;);<br><br>t.<span class="hljs-title function_">run</span>(); <span class="hljs-comment">// 输出 1 start 2 3 1 end</span><br></code></pre></td></tr></table></figure>
 
-<ol>
-<li>首先要读一个对象，就会想到读对象的原型，原型有 valueOf 方法，可以读到对象</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(o.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;valueOf&quot;</span>)); <span class="hljs-comment">// output : [Function: valueOf]</span><br></code></pre></td></tr></table></figure>
+<p>实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TaskPro</span> &#123;<br>  <span class="hljs-comment">// 添加任务</span><br>  _tasklist = [];<br>  <span class="hljs-comment">//当前任务正在执行标识</span><br>  _running = <span class="hljs-literal">false</span>;<br>  <span class="hljs-comment">//要执行任务的下标</span><br>  _currentIndex = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-comment">//添加任务</span><br>  <span class="hljs-title function_">addTask</span>(<span class="hljs-params">task</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_tasklist</span>.<span class="hljs-title function_">push</span>(task);<br>  &#125;<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 边界情况判定，如果当前任务正在执行，直接return</span><br><span class="hljs-comment">     * 否则，开始执行任务</span><br><span class="hljs-comment">     */</span><br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">_running</span>) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-comment">// 未在执行任务，设置标识</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_running</span> = <span class="hljs-literal">true</span>;<br>    <span class="hljs-comment">// 执行任务</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">_runTask</span>();<br>  &#125;<br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">_next</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 执行下一个任务</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span>++;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">_runTask</span>();<br>  &#125;<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">_runTask</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 边界情况判定</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span> &gt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">_tasklist</span>.<span class="hljs-property">length</span>) &#123;<br>      <span class="hljs-comment">// 所有任务执行完毕，设置标识</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">_running</span> = <span class="hljs-literal">false</span>;<br>      <span class="hljs-comment">// 清空任务列表</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">_tasklist</span> = [];<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-comment">// 记录任务执行之前的下标</span><br>    <span class="hljs-keyword">const</span> prevIndex = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span>;<br><br>    <span class="hljs-comment">// 获取当前任务</span><br>    <span class="hljs-keyword">const</span> task = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_tasklist</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span>];<br><br>    <span class="hljs-comment">// 执行当前任务</span><br>    <span class="hljs-keyword">await</span> <span class="hljs-title function_">task</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">_next</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));<br>    <span class="hljs-comment">// 记录任务执行之后的下标</span><br>    <span class="hljs-keyword">const</span> nextIndex = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span>;<br>    <span class="hljs-comment">// 边界情况判定</span><br>    <span class="hljs-keyword">if</span> (prevIndex === nextIndex) &#123;<br>      <span class="hljs-comment">// 当前任务执行完毕，执行下一个任务</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">_next</span>();<br>    &#125;<br>  &#125;<br>&#125;<br><br><br><span class="hljs-comment">//-------- 结果 ----------</span><br><span class="hljs-keyword">const</span> t = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TaskPro</span>();<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-keyword">async</span> (next) =&gt; &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;start&quot;</span>);<br>  <span class="hljs-keyword">await</span> <span class="hljs-title function_">next</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;end&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;2&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;3&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">run</span>(); <span class="hljs-comment">// 输出 1 start 2 3 1 end</span><br></code></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>读到 valueOf 方法，可以调用 valueOf 方法，读到对象</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(o.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;valueOf&quot;</span>)()); <span class="hljs-comment">// output : error - 知识点1:this指向问题</span><br><span class="hljs-comment">// 上述代码等同于</span><br><span class="hljs-keyword">let</span> handleValueOf = o.<span class="hljs-property">valueOf</span>;<br><span class="hljs-title function_">handleValueOf</span>(); <span class="hljs-comment">// output : error  this不指向对象本身</span><br></code></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>valueOf 无法读到对象本身，可以直接使用 Object.defineProperty 增加一个返回对象本身的方法</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>, <span class="hljs-string">&quot;hack&quot;</span>, &#123;<br>  <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>同多原型链自定义方法访问到私有对象本身,更改 o 对象本身,就实现了上述功能</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> objectBackup = o.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;hack&quot;</span>);<br><br>objectBackup.<span class="hljs-property">c</span> = <span class="hljs-string">&quot;hackInner&quot;</span>;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(o.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;c&quot;</span>)); <span class="hljs-comment">// &#x27;hackInner&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<h4 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h4><ol>
-<li>原型设置为 null</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> o =(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> obj = &#123;<br>    <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>,<br>  &#125;;<br><br>  <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">setPrototypeOf</span>(obj, <span class="hljs-literal">null</span>);<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) &#123;<br>      <span class="hljs-keyword">return</span> obj[key];<br>    &#125;,<br>  &#125;;<br>&#125;)()<br></code></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>在访问器中判断是否自身携带属性</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> o = (<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> obj = &#123;<br>    <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>,<br>  &#125;;<br><br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) &#123;<br>      <span class="hljs-keyword">if</span> (obj.<span class="hljs-title function_">hasOwnProperty</span>(key)) &#123;<br>        <span class="hljs-keyword">return</span> obj[key];<br>      &#125;<br>    &#125;,<br>  &#125;;<br>&#125;)()<br></code></pre></td></tr></table></figure>
-
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>一切代码皆有漏洞，需要谨慎编写，尽量防御</p>
 
                 
               </div>
@@ -355,8 +325,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>闭包提权漏洞：修改私有对象的属性</div>
-      <div>https://blog.funfe.cn/2024/03/13/20240313123053/</div>
+      <div>理解任务执行的洋葱模型 - koa</div>
+      <div>https://blog.funfe.cn/2024/03/19/20240319124707/</div>
     </div>
     <div class="license-meta">
       
@@ -368,7 +338,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月13日</div>
+          <div>2024年3月19日</div>
         </div>
       
       
@@ -400,18 +370,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/19/20240319124707/" title="理解任务执行的洋葱模型 - koa">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">理解任务执行的洋葱模型 - koa</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/02/23/20240223162747/" title="问题记录-关于 VUECLI3+ 容易忽视的问题-环境变量与build">
-                        <span class="hidden-mobile">问题记录-关于 VUECLI3+ 容易忽视的问题-环境变量与build</span>
+                      <a href="/2024/03/13/20240313123053/" title="闭包提权漏洞：修改私有对象的属性">
+                        <span class="hidden-mobile">闭包提权漏洞：修改私有对象的属性</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
