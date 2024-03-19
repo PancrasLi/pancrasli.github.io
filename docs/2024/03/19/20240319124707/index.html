@@ -26,7 +26,7 @@
 <meta property="og:description" content="洋葱模型">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-19T04:47:18.030Z">
-<meta property="article:modified_time" content="2024-03-19T05:10:40.682Z">
+<meta property="article:modified_time" content="2024-03-19T05:18:41.399Z">
 <meta property="article:author" content="李鹏杰">
 <meta property="article:tag" content="js">
 <meta name="twitter:card" content="summary_large_image">
@@ -212,7 +212,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          391 字
+          441 字
         
       </span>
     
@@ -273,7 +273,12 @@
             
               <div class="markdown-body">
                 
-                <h2 id="1-什么是洋葱模型"><a href="#1-什么是洋葱模型" class="headerlink" title="1. 什么是洋葱模型"></a>1. 什么是洋葱模型</h2><p>洋葱模型，是 koa 中间件的执行顺序。</p>
+                <h2 id="1-什么是洋葱模型"><a href="#1-什么是洋葱模型" class="headerlink" title="1. 什么是洋葱模型"></a>1. 什么是洋葱模型</h2><p>洋葱模型，是 koa 中间件的执行顺序，洋葱模型的执行顺序是：   </p>
+<ul>
+<li>中间件 A 开始执行    </li>
+<li>中间件 A 执行完毕，执行下一个中间件 B</li>
+<li>中间件 B 执行完毕，执行下一个中间件 C<br>….</li>
+</ul>
 <h2 id="2-实现一个洋葱模型的任务执行构造函数"><a href="#2-实现一个洋葱模型的任务执行构造函数" class="headerlink" title="2. 实现一个洋葱模型的任务执行构造函数"></a>2. 实现一个洋葱模型的任务执行构造函数</h2><p>需求：实现一个构造函数满足以下需求</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> t = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TaskPro</span>();<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-keyword">async</span> (next) =&gt; &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;start&quot;</span>);<br>  <span class="hljs-keyword">await</span> <span class="hljs-title function_">next</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;end&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;2&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;3&quot;</span>);<br>&#125;);<br><br>t.<span class="hljs-title function_">run</span>(); <span class="hljs-comment">// 输出 1 start 2 3 1 end</span><br></code></pre></td></tr></table></figure>
 
