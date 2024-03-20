@@ -18,24 +18,24 @@
   <meta name="author" content="李鹏杰">
   <meta name="keywords" content="">
   
-    <meta name="description" content="洋葱模型">
+    <meta name="description" content="前端性能">
 <meta property="og:type" content="article">
-<meta property="og:title" content="理解任务执行的洋葱模型 - koa">
-<meta property="og:url" content="https://blog.funfe.cn/2024/03/19/20240319124707/index.html">
+<meta property="og:title" content="性能优化 - HTML 性能的一般注意事项">
+<meta property="og:url" content="https://blog.funfe.cn/2024/03/20/20240320103250/index.html">
 <meta property="og:site_name" content="前端李">
-<meta property="og:description" content="洋葱模型">
+<meta property="og:description" content="前端性能">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-19T04:47:18.030Z">
-<meta property="article:modified_time" content="2024-03-19T05:18:41.399Z">
+<meta property="article:published_time" content="2024-03-20T02:32:59.599Z">
+<meta property="article:modified_time" content="2024-03-20T02:52:56.239Z">
 <meta property="article:author" content="李鹏杰">
-<meta property="article:tag" content="js">
+<meta property="article:tag" content="前端性能">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>理解任务执行的洋葱模型 - koa - 前端李</title>
+  <title>性能优化 - HTML 性能的一般注意事项 - 前端李</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -189,7 +189,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="理解任务执行的洋葱模型 - koa"></span>
+            <span id="subtitle" data-typed-text="性能优化 - HTML 性能的一般注意事项"></span>
           
         </div>
 
@@ -200,8 +200,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-19 12:47" pubdate>
-          2024年3月19日 下午
+        <time datetime="2024-03-20 10:32" pubdate>
+          2024年3月20日 上午
         </time>
       </span>
     
@@ -212,7 +212,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          441 字
+          1.3k 字
         
       </span>
     
@@ -223,7 +223,7 @@
         
         
         
-          4 分钟
+          12 分钟
         
       </span>
     
@@ -268,23 +268,33 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">理解任务执行的洋葱模型 - koa</h1>
+            <h1 id="seo-header">性能优化 - HTML 性能的一般注意事项</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="1-什么是洋葱模型"><a href="#1-什么是洋葱模型" class="headerlink" title="1. 什么是洋葱模型"></a>1. 什么是洋葱模型</h2><p>洋葱模型，是 koa 中间件的执行顺序，洋葱模型的执行顺序是：   </p>
-<ul>
-<li>中间件 A 开始执行    </li>
-<li>中间件 A 执行完毕，执行下一个中间件 B</li>
-<li>中间件 B 执行完毕，执行下一个中间件 C<br>….</li>
-</ul>
-<h2 id="2-实现一个洋葱模型的任务执行构造函数"><a href="#2-实现一个洋葱模型的任务执行构造函数" class="headerlink" title="2. 实现一个洋葱模型的任务执行构造函数"></a>2. 实现一个洋葱模型的任务执行构造函数</h2><p>需求：实现一个构造函数满足以下需求</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> t = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TaskPro</span>();<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-keyword">async</span> (next) =&gt; &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;start&quot;</span>);<br>  <span class="hljs-keyword">await</span> <span class="hljs-title function_">next</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;end&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;2&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;3&quot;</span>);<br>&#125;);<br><br>t.<span class="hljs-title function_">run</span>(); <span class="hljs-comment">// 输出 1 start 2 3 1 end</span><br></code></pre></td></tr></table></figure>
-
-<p>实现：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TaskPro</span> &#123;<br>  <span class="hljs-comment">// 添加任务</span><br>  _tasklist = [];<br>  <span class="hljs-comment">//当前任务正在执行标识</span><br>  _running = <span class="hljs-literal">false</span>;<br>  <span class="hljs-comment">//要执行任务的下标</span><br>  _currentIndex = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-comment">//添加任务</span><br>  <span class="hljs-title function_">addTask</span>(<span class="hljs-params">task</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_tasklist</span>.<span class="hljs-title function_">push</span>(task);<br>  &#125;<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 边界情况判定，如果当前任务正在执行，直接return</span><br><span class="hljs-comment">     * 否则，开始执行任务</span><br><span class="hljs-comment">     */</span><br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">_running</span>) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-comment">// 未在执行任务，设置标识</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_running</span> = <span class="hljs-literal">true</span>;<br>    <span class="hljs-comment">// 执行任务</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">_runTask</span>();<br>  &#125;<br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">_next</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 执行下一个任务</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span>++;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">_runTask</span>();<br>  &#125;<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">_runTask</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 边界情况判定</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span> &gt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">_tasklist</span>.<span class="hljs-property">length</span>) &#123;<br>      <span class="hljs-comment">// 所有任务执行完毕，设置标识</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">_running</span> = <span class="hljs-literal">false</span>;<br>      <span class="hljs-comment">// 清空任务列表</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">_tasklist</span> = [];<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-comment">// 记录任务执行之前的下标</span><br>    <span class="hljs-keyword">const</span> prevIndex = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span>;<br><br>    <span class="hljs-comment">// 获取当前任务</span><br>    <span class="hljs-keyword">const</span> task = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_tasklist</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span>];<br><br>    <span class="hljs-comment">// 执行当前任务</span><br>    <span class="hljs-keyword">await</span> <span class="hljs-title function_">task</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">_next</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));<br>    <span class="hljs-comment">// 记录任务执行之后的下标</span><br>    <span class="hljs-keyword">const</span> nextIndex = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_currentIndex</span>;<br>    <span class="hljs-comment">// 边界情况判定</span><br>    <span class="hljs-keyword">if</span> (prevIndex === nextIndex) &#123;<br>      <span class="hljs-comment">// 当前任务执行完毕，执行下一个任务</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">_next</span>();<br>    &#125;<br>  &#125;<br>&#125;<br><br><br><span class="hljs-comment">//-------- 结果 ----------</span><br><span class="hljs-keyword">const</span> t = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TaskPro</span>();<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-keyword">async</span> (next) =&gt; &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;start&quot;</span>);<br>  <span class="hljs-keyword">await</span> <span class="hljs-title function_">next</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;end&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;2&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">addTask</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;3&quot;</span>);<br>&#125;);<br>t.<span class="hljs-title function_">run</span>(); <span class="hljs-comment">// 输出 1 start 2 3 1 end</span><br></code></pre></td></tr></table></figure>
-
+                <p>想要构建快速高效稳定的Web应用程序，需要我们在细节上做文章，毕竟进步都是点滴积累，今天来看下HTML性能的一般注意事项。</p>
+<h2 id="前序"><a href="#前序" class="headerlink" title="前序"></a>前序</h2><p>当您在浏览器的地址栏中输入网址时，浏览器会向服务器发送 GET 请求进行检索。网页的第一个请求针对的是 HTML 资源，因此，确保 HTML 以最短延迟快速到达是关键性能目标。</p>
+<h2 id="尽量减少重定向"><a href="#尽量减少重定向" class="headerlink" title="尽量减少重定向"></a>尽量减少重定向</h2><p>在请求资源时，服务器可能会做出一个重定向响应，该重定向可以是永久重定向（301 Moved Permanently 响应）或临时重定向（302 Found 响应）。</p>
+<p>重定向会降低网页加载速度，因为它需要浏览器在新位置发出额外的 HTTP 请求来检索资源。重定向有两种类型：</p>
+<ol>
+<li>完全发生在源站内的同源重定向。这些类型的重定向完全由您控制，因为管理它们的逻辑完全位于您的 Web 服务器上。</li>
+<li>由其他源启动的跨域重定向。这些类型的重定向通常无法控制。</li>
+</ol>
+<p>广告、网址缩短服务和其他第三方服务通常会使用跨源重定向。虽然跨源重定向超出了您的控制范围，但您可能仍需要检查是否避免了多次重定向。例如，将广告链接到 HTTP 网页，而该网页又重定向到其 HTTPS 等效网页，或者跨源重定向到达您的来源，但随后触发同源重定向。</p>
+<h2 id="缓存-HTML-响应"><a href="#缓存-HTML-响应" class="headerlink" title="缓存 HTML 响应"></a>缓存 HTML 响应</h2><p>缓存 HTML 响应很困难，因为响应可能包含指向其他关键资源（例如 CSS、JavaScript、图片和其他资源类型）的链接。这些资源的文件名中可能包含唯一指纹，该指纹会根据文件的内容而变化。这意味着，缓存的 HTML 文档可能会在部署后变得过时，因为它包含对过时子资源的引用。（现代前端工程化打包后的资源hash值随时在变，会产生较多这样的问题）</p>
+<p>不过，较短的缓存生命周期（而不是不缓存）具有诸多优势，例如允许在 CDN 中缓存资源，减少从源服务器传送的请求数量，以及在浏览器中传送资源，从而重新验证资源而不是再次下载。此方法最适合在任何上下文中不会更改的静态内容，并且可以将缓存资源的适当时间设置为您认为合适的分钟数。将静态 HTML 资源花五分钟的时间是一个可靠的选择，可以确保定期更新不会引起注意。</p>
+<p>如果网页的 HTML 内容以某种方式进行了个性化（例如针对经过身份验证的用户），那么您很有可能因各种问题（包括安全性和新鲜度）而根本不想缓存内容。如果用户浏览器缓存了 HTML 响应，您就无法使缓存失效。因此，在此类情况下，最好避免完全缓存 HTML。</p>
+<p>缓存 HTML 的一种审慎方法是使用 ETag 或 Last-Modified 响应标头。ETag（也称为实体标记）标头是一个标识符，用于唯一标识所请求资源，通常使用资源内容的哈希值：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">ETag:</span> <span class="hljs-string">&quot;33a64df551425fcc55e4d42a148795d9f25f89d4&quot;</span><br></code></pre></td></tr></table></figure>
+<p><code>Last-Modified</code> 响应标头包含资源的最后修改日期和时间：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Last</span>-Modified: Tue, <span class="hljs-number">15</span> Nov <span class="hljs-number">1994</span> <span class="hljs-number">12</span>:<span class="hljs-number">45</span>:<span class="hljs-number">26</span> GMT    <br><br></code></pre></td></tr></table></figure>
+<h2 id="测量服务器响应时间"><a href="#测量服务器响应时间" class="headerlink" title="测量服务器响应时间"></a>测量服务器响应时间</h2><p>如果响应未缓存，则服务器的响应时间在很大程度上取决于您的托管服务提供商和后端应用堆栈。与动态网页相比，提供动态生成的响应（例如从数据库获取数据）的网页的 TTFB 可能更高，无需在后端投入大量计算时间即可立即提供。如果显示加载旋转图标，然后在客户端提取所有数据，则会将工作从更加可预测的服务器端环境移至可能不可预测的客户端环境。最大限度地减少客户端工作量通常可以改进以用户为中心的指标。</p>
+<p>如果用户在字段遇到 TTFB(TTFB 是 Time to First Byte 的缩写，指的是浏览器开始收到服务器响应数据的时间) 缓慢的问题，您可以使用 Server-Timing 响应标头公开有关时间在服务器上的什么位置的信息：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Server-Timing: auth;<span class="hljs-attribute">dur</span>=55.5, db;<span class="hljs-attribute">dur</span>=220<br></code></pre></td></tr></table></figure>
+<p>Server-Timing 标头的值可以包含多个指标，以及每个指标的时长。然后，可以在现场使用 Navigation Timing API 从用户那里收集这些数据，并进行分析，以了解用户是否遇到延迟。在前面的代码段中，响应标头包含两个显示时间：</p>
+<p>对用户进行身份验证的时间 (auth)，用时 55.5 毫秒。<br>数据库访问时间 (db)，用时 220 毫秒。</p>
+<h2 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h2><p>基于文本的响应（例如 HTML、JavaScript、CSS 和 SVG 图片）应进行压缩，以减小通过网络传输时的大小，从而加快其下载速度。最常用的压缩算法是 gzip 和 <a target="_blank" rel="noopener" href="https://github.com/google/brotli">Brotli</a>。<a target="_blank" rel="noopener" href="https://github.com/google/brotli">Brotli</a> 比 gzip 提高了约 15% 到 20%。</p>
 
                 
               </div>
@@ -303,7 +313,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/js/" class="category-chain-item">js</a>
+  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD/" class="category-chain-item">前端性能</a>
   
   
 
@@ -318,7 +328,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/js/" class="print-no-link">#js</a>
+        <a href="/tags/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD/" class="print-no-link">#前端性能</a>
       
     </div>
   
@@ -330,8 +340,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>理解任务执行的洋葱模型 - koa</div>
-      <div>https://blog.funfe.cn/2024/03/19/20240319124707/</div>
+      <div>性能优化 - HTML 性能的一般注意事项</div>
+      <div>https://blog.funfe.cn/2024/03/20/20240320103250/</div>
     </div>
     <div class="license-meta">
       
@@ -343,7 +353,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月19日</div>
+          <div>2024年3月20日</div>
         </div>
       
       
@@ -375,18 +385,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/20/20240320103250/" title="性能优化 - HTML 性能的一般注意事项">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">性能优化 - HTML 性能的一般注意事项</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/13/20240313123053/" title="闭包提权漏洞：修改私有对象的属性">
-                        <span class="hidden-mobile">闭包提权漏洞：修改私有对象的属性</span>
+                      <a href="/2024/03/19/20240319124707/" title="理解任务执行的洋葱模型 - koa">
+                        <span class="hidden-mobile">理解任务执行的洋葱模型 - koa</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
