@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://blog.funfe.cn/img/20240320142213/step.jpg">
 <meta property="og:image" content="https://blog.funfe.cn/img/20240320142213/webTest.jpg">
 <meta property="article:published_time" content="2024-03-20T06:22:26.292Z">
-<meta property="article:modified_time" content="2024-03-27T08:49:32.864Z">
+<meta property="article:modified_time" content="2024-04-07T06:32:05.235Z">
 <meta property="article:author" content="李鹏杰">
 <meta property="article:tag" content="前端性能">
 <meta name="twitter:card" content="summary_large_image">
@@ -314,7 +314,7 @@
 <h3 id="阻塞解析器的资源"><a href="#阻塞解析器的资源" class="headerlink" title="阻塞解析器的资源"></a>阻塞解析器的资源</h3><p>阻塞解析器的资源是指那些阻止浏览器通过继续解析 HTML 来寻找要执行的其他工作的资源。默认情况下，JavaScript 会阻塞解析器（除非明确标记为异步或延迟），因为 JavaScript 可能会在执行时更改 DOM 或 CSSOM。因此，在了解所请求 JavaScript 对网页 HTML 造成的全部影响之前，浏览器就不可能继续处理其他资源。因此，同步 JavaScript 会阻止解析器。</p>
 <p>阻塞解析器的资源实际上也是阻碍呈现的。由于解析器在完成解析之前无法继续跳过会阻塞解析的资源，因此它无法访问和呈现它之后的内容。浏览器在等待期间可以呈现到目前为止所收到的任何 HTML，但在涉及关键呈现路径的情况下，&lt;head&gt; 中任何阻止解析器的资源实际上意味着，所有网页内容都被阻止呈现。</p>
 <p>阻塞解析器可能会消耗巨大的性能成本，远不止阻塞渲染的成本。因此，浏览器会使用辅助 HTML 解析器（称为预加载扫描程序）在主要 HTML 解析器被屏蔽时下载即将到来的资源，从而降低此成本。虽然不如实际解析 HTML 好，但至少允许浏览器中的网络功能先于被屏蔽的解析器运行，这意味着它将来再次被屏蔽的可能性更小。</p>
-<h3 id="识别阻塞资源"><a href="#识别阻塞资源" class="headerlink" title="识别阻塞资源"></a>识别阻塞资源</h3><p>许多性能审核工具都会识别阻塞渲染和解析器的资源。<a href="'https://www.webpagetest.org/'">WebPageTest</a> 会使用资源网址左侧橙色圆圈标记阻止呈现的资源：<br><img src="/img/20240320142213/webTest.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="识别阻塞资源"><a href="#识别阻塞资源" class="headerlink" title="识别阻塞资源"></a>识别阻塞资源</h3><p>许多性能审核工具都会识别阻塞渲染和解析器的资源。<a target="_blank" rel="noopener" href="https://www.webpagetest.org/">WebPageTest</a> 会使用资源网址左侧橙色圆圈标记阻止呈现的资源：<br><img src="/img/20240320142213/webTest.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>未完待续。</p>
 
                 
